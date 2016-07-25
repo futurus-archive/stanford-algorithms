@@ -6,12 +6,18 @@ answer = set()
 for line in f:
     hash[int(line)] = 1
 
-for t in range(-10000, 10001):
-    for x in hash.keys():
-        y = t-x
-        if y is not x and y in hash:
-            answer.add(t)
-            break
+i = 0
+
+for x in hash.keys():
+    minPos = -10000 - x
+    maxPos = +10000 - x
+
+    for y in range(minPos, maxPos + 1):
+        if y in hash and y != x:
+            answer.add(x + y)
+
+    if len(answer) == 20001:
+        break
 
 print(len(answer))
 print(answer)
