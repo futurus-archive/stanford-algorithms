@@ -1,3 +1,5 @@
+// deprecated
+
 package mst;
 
 import java.io.File;
@@ -147,8 +149,16 @@ public class PrimMST {
 
     public static void main(String[] args) {
         try {
-            Graph g = getGraph("data/tedges.txt");
+            Graph g = getGraph("data/uedges.txt");
             int size = g.nVertices();
+//            for (Vertex vp : g.getVertices()) {
+//                System.out.println(vp.getId() + " " + vp.nEdges() + " " + vp.edges.peek().getId());
+//                while (vp.edges.size() > 0 && g.containsVertex(vp.edges.peek().getId())) {
+//                    System.out.println(vp.getId() + " ---> " + vp.edges.peek().getId() + " w/ " + vp.edges.peek().getWeight());
+//                    vp.edges.poll();
+//                }
+//            }
+
             Graph t = new Graph();
             long sum = 0;
 
@@ -162,12 +172,10 @@ public class PrimMST {
                     System.out.println("---------");
                     System.out.println("v: " + v.getId());
 
-                    w = v.edges.poll();
+                    w = g.popVertex(v.edges.poll().getId());
                     System.out.println("w: " + w.getId() + " --- " + w.getWeight());
-
                     t.addVertex(w);
                     sum += w.getWeight();
-                    g.popVertex(w.getId());
 
                     int minLen = 1000000;
                     for (Vertex vp : t.getVertices()) {
@@ -176,7 +184,7 @@ public class PrimMST {
                         }
 
                         if (vp.edges.size() > 0 && vp.edges.peek().getWeight() <= minLen) {
-                            System.out.println(vp.getId() + " ---> " + vp.edges.peek().getId() + " w/ " + vp.edges.peek().getWeight() );
+                            System.out.println(vp.getId() + " ---> " + vp.edges.peek().getId() + " w/ " + vp.edges.peek().getWeight() + " and is connected to " + vp.edges.peek().edges.size());
                             v = new Vertex(vp);
                             minLen = vp.edges.peek().getWeight();
                         }
